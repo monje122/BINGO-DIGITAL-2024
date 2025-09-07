@@ -493,38 +493,20 @@ document.getElementById('cerrarVentasBtn').addEventListener('click', async () =>
   }
 });
 
+// Reiniciar base de datos
 async function reiniciarTodo() {
   if (!confirm('¿Estás seguro de reiniciar todo?')) return;
-
-  // BORRAR TODOS LOS COMPROBANTES DEL BUCKET "comprobante"
-  const { data: archivos, error } = await supabase.storage.from('comprobante').list();
-  if (error) { 
-    alert('Error listando archivos: ' + error.message); 
-    return; 
-  }
-  if (archivos && archivos.length > 0) {
-    const nombres = archivos.map(f => f.name);
-    const { error: errorBorrado } = await supabase.storage.from('comprobante').remove(nombres);
-    if (errorBorrado) {
-      alert('Error borrando archivos del bucket: ' + errorBorrado.message);
-      return;
-    }
-  }
-
-  // BORRA TODAS LAS INSCRIPCIONES
   await supabase.from('inscripciones').delete().neq('cedula', '');
-
-  // BORRA TODOS LOS CARTONES
   await supabase.from('cartones').delete().neq('numero', 0);
-
-  alert('¡Todos los comprobantes, inscripciones y cartones han sido eliminados!');
+  const { data: archivos } = await supabase.storage.from('comprobantes').list();
+  const listaDiv = document.getElementById('listaAprobados');
+  if (listaDiv) listaDiv.innerHTML = '';
+  for (const file of archivos) {
+    await supabase.storage.from('comprobantes').remove([file.name]);
+  }
+  alert('Datos reiniciados');
   location.reload();
 }
-
-
-
-
-
 // Variables para modal
 let cartonSeleccionadoTemporal = null;
 let cartonElementoTemporal = null;
