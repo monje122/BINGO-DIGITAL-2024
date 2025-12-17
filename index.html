@@ -273,10 +273,6 @@
     <button onclick="cerrarTerminos()">Aceptar</button>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script> <script src="script.js"></script>
-  
  <footer style="text-align: center; padding: 20px; font-size: 13px; color: white; background-color: rgba(0,0,0,0.0);">
   © 2025 Bingodigital2024. Todos los derechos reservados. <br>
   <a href="privacidad.html" style="color: #f9d949; text-decoration: underline;">Política de Privacidad</a>
@@ -287,6 +283,20 @@
   </a>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Crear la instancia global de Supabase y guardarla en window.supabase -->
+<script>
+  const supabaseUrl = 'https://bvwgjwoobhfcggcvkrcm.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2d2dqd29vYmhmY2dnY3ZrcmNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMwOTUxMjUsImV4cCI6MjA2ODY3MTEyNX0.0oz9o3uhe6rc8n1dJmtX2JKCR2Qu1gVwML905rt4Zq0';
+
+  // ✅ Esto crea UNA SOLA instancia global accesible desde todos los archivos
+  window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
 </script>
+
+<!-- Cargar tu archivo script.js que usará esa instancia -->
+<script src="script.js"></script>
+
+
 </body>
 </html>
